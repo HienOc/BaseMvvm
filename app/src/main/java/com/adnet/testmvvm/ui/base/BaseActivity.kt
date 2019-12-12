@@ -15,7 +15,7 @@ abstract class BaseActivity<
         ViewModel : BaseViewModel
         > : AppCompatActivity() {
 
-    private lateinit var viewBinding: ViewBinding
+     lateinit var viewBinding: ViewBinding
     protected abstract val viewModel: ViewModel
 
     @get:LayoutRes

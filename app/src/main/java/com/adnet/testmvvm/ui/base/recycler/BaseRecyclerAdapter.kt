@@ -1,4 +1,4 @@
-package com.adnet.testmvvm.ui.base
+package com.adnet.testmvvm.ui.base.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
