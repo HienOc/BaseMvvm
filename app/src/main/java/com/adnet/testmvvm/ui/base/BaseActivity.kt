@@ -15,7 +15,7 @@ abstract class BaseActivity<
         ViewModel : BaseViewModel
         > : AppCompatActivity() {
 
-     lateinit var viewBinding: ViewBinding
+    lateinit var viewBinding: ViewBinding
     protected abstract val viewModel: ViewModel
 
     @get:LayoutRes
@@ -23,13 +23,10 @@ abstract class BaseActivity<
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(checkInternet()){
-            initViewBinding()
-            setupPermissions()
-            initView()
-            initListener()
-            observeViewModel()
-        }
+        initViewBinding()
+        initView()
+        initListener()
+        observeViewModel()
 
     }
 
@@ -40,10 +37,6 @@ abstract class BaseActivity<
     }
 
     abstract fun initView()
-
-    abstract fun checkInternet():Boolean
-
-    abstract fun setupPermissions()
 
     abstract fun initListener()
 

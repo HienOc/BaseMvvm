@@ -1,18 +1,21 @@
 package com.adnet.testmvvm.ui.home
 
-import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import assignViews
 import com.adnet.testmvvm.R
 import com.adnet.testmvvm.data.model.Video
 import com.adnet.testmvvm.databinding.ActivityMainBinding
 import com.adnet.testmvvm.ui.base.BaseActivity
-import isNetworkAvailable
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), View.OnClickListener,
+    SwipeRefreshLayout.OnRefreshListener {
 
     override val viewModel: MainViewModel by viewModel()
 
@@ -20,10 +23,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         get() = R.layout.activity_main
 
     private var mainAdapter = MainAdapter { video: Video ->
-        displayVideo(video)
+        showReminderRemoveAlert(video)
     }
-
-    override fun checkInternet(): Boolean = isNetworkAvailable(this)
 
     override fun initView() {
         recyclerViewMain.apply {
@@ -34,23 +35,51 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             setHasFixedSize(true)
             adapter = mainAdapter
         }
-    }
 
-    override fun setupPermissions() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        swipeRefreshLayout.setOnRefreshListener(this)
     }
 
     override fun initListener() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        assignViews(imageButtonNext)
     }
 
     override fun observeViewModel() {
         viewModel.videoList.observe(this, Observer {
             mainAdapter.submitList(it)
+            swipeRefreshLayout.isRefreshing = false
         })
     }
 
-    private fun displayVideo(video: Video) {
-        Toast.makeText(this, video.name, Toast.LENGTH_LONG).show()
+    private fun showReminderRemoveAlert(video: Video) {
+        val alertDialog = AlertDialog.Builder(this).create()
+        alertDialog.run {
+            setMessage("Xoa ban ghi")
+            setButton(AlertDialog.BUTTON_POSITIVE,
+                "Ok") { dialog, _ ->
+                removeReminder(video)
+                dialog.dismiss()
+            }
+            setButton(AlertDialog.BUTTON_NEGATIVE,
+               "Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            show()
+        }
+    }
+
+    private fun removeReminder(video: Video) {
+        viewModel.deleteVideo(video)
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.imageButtonNext -> {
+
+            }
+        }
+    }
+
+    override fun onRefresh() {
+       viewModel.getVideoRemote()
     }
 }
