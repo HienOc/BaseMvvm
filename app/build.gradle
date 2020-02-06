@@ -32,6 +32,10 @@ android {
     dataBinding {
         enabled = true
     }
+
+    packagingOptions {
+        exclude 'META-INF/core_release.kotlin_module'
+    }
 }
 
 dependencies {
@@ -43,6 +47,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation project(':core')
 
     //noinspection GradleDependency
     implementation "androidx.room:room-runtime:$roomVersion"
@@ -69,7 +75,7 @@ dependencies {
 
     //Okhttp3
     implementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.3.0'
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
@@ -89,4 +95,13 @@ dependencies {
     // Glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+   // implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+   // implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.23'
+
+    //SharedPreferences for Kotlin - https://github.com/chibatching/Kotpref
+    implementation 'com.chibatching.kotpref:kotpref:2.8.0'
+    implementation 'com.chibatching.kotpref:initializer:2.8.0'
+
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

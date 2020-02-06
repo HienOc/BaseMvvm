@@ -1,7 +1,6 @@
 package com.adnet.testmvvm.ui.home
 
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -66,7 +65,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), View.On
             show()
         }
     }
-
+    
     private fun removeReminder(video: Video) {
         viewModel.deleteVideo(video)
     }
