@@ -46,3 +46,4 @@ fun isNetworkAvailable(context: Context): Boolean {
 fun Int.formatDecimal(): String = this.let {
     DecimalFormat("#00").format(it)
 }
+

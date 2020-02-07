@@ -3,12 +3,12 @@ package com.adnet.testmvvm.ui.video
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.adnet.testmvvm.R
+import com.adnet.testmvvm.data.model.VideoYoutube
 import com.adnet.testmvvm.databinding.ActivityVideoBinding
 import com.adnet.testmvvm.ui.base.BaseActivity
 import com.adnet.testmvvm.ui.listsvideo.EventTest
@@ -22,31 +22,36 @@ import kotlinx.android.synthetic.main.activity_video.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Suppress("DEPRECATION")
-class VideoActivity : BaseActivity<ActivityVideoBinding,VideoViewModel>() {
+class VideoActivity : BaseActivity<ActivityVideoBinding, VideoViewModel>() {
 
     override val viewModel: VideoViewModel by viewModel()
-
-    private lateinit var youTube: YouTubePlayer
 
     override val layoutId: Int
         get() = R.layout.activity_video
 
+    private lateinit var youTube: YouTubePlayer
+
+    private var listVideo = mutableListOf<VideoYoutube>()
+
+    private var checkVideo: Int = 0
+
     override fun initView() {
+        loadListVideo()
         initYouTubePlayerView()
         lifecycle.addObserver(youtubePlayerView)
+    }
 
-//        val customPlayerUi = youtubePlayerView.inflateCustomPlayerUi(R.layout.custom_player_ui)
-//       // initPictureInPicture(youtubePlayerView)
-//        youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-//            override fun onReady(youTubePlayer: YouTubePlayer) {
-//                //customPlayerUi.progressbar.gone()
-//                Log.d("Hienfff","MMMMMMM")
-//                val customPlayerUiController= CustomPlayerUiController(this@VideoActivity,customPlayerUi,youTubePlayer,youtubePlayerView)
-//                youTubePlayer.addListener(customPlayerUiController)
-//                youtubePlayerView.addFullScreenListener(customPlayerUiController)
-//                youTubePlayer.loadOrCueVideo(lifecycle, SharePreference.MUSIC, 0f)
-//            }
-//        })
+    private fun loadListVideo() {
+        intent.extras?.let {
+            listVideo = it.getParcelableArrayList<VideoYoutube>("video")!!
+        }
+
+        for (i in listVideo.indices) {
+            if (listVideo[i].idVideo == SharePreference.MUSIC) {
+                checkVideo = i
+                break
+            }
+        }
     }
 
     override fun initListener() {
@@ -57,7 +62,6 @@ class VideoActivity : BaseActivity<ActivityVideoBinding,VideoViewModel>() {
         initPictureInPicture(youtubePlayerView)
         youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-               // setPlayNextVideo(youTubePlayer)
                 youTube = youTubePlayer
                 youTubePlayer.loadOrCueVideo(lifecycle, SharePreference.MUSIC, 0f)
             }
@@ -67,18 +71,12 @@ class VideoActivity : BaseActivity<ActivityVideoBinding,VideoViewModel>() {
                 state: PlayerConstants.PlayerState
             ) {
                 super.onStateChange(youTubePlayer, state)
-                if(SharePreference.EDIT=="EDIT"){
+                if (SharePreference.EDIT == "EDIT") {
+                    SharePreference.EDIT = " "
                     finish()
-                    SharePreference.EDIT=" "
                 }
-                if(SharePreference.CHANGE=="NEXT"){
-                    SharePreference.CHANGE=" "
+                if (SharePreference.CHANGE != " ") {
                     setPlayNextVideo(youTube)
-                }else{
-                    if(SharePreference.CHANGE=="PREVIOUS"){
-                        SharePreference.CHANGE=" "
-                        setPlayNextVideo(youTube)
-                    }
                 }
             }
         })
@@ -99,9 +97,8 @@ class VideoActivity : BaseActivity<ActivityVideoBinding,VideoViewModel>() {
                     PackageManager.FEATURE_PICTURE_IN_PICTURE
                 )
                 if (supportsPIP) {
-                    SharePreference.CHECK_PICTURE=true
+                    SharePreference.CHECK_PICTURE = true
                     enterPictureInPictureMode()
-
                 }
             } else {
                 AlertDialog.Builder(this)
@@ -120,33 +117,46 @@ class VideoActivity : BaseActivity<ActivityVideoBinding,VideoViewModel>() {
     ) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
         if (isInPictureInPictureMode) {
-            SharePreference.CHECK_PICTURE=true
-            youtubePlayerView.enterFullScreen()
-            youtubePlayerView.getPlayerUiController().showUi(false)
+            SharePreference.CHECK_PICTURE = true
+            youtubePlayerView.apply {
+                enterFullScreen()
+                getPlayerUiController().showUi(false)
+            }
         } else {
-            SharePreference.CHECK_PICTURE=false
-            youtubePlayerView.exitFullScreen()
-            youtubePlayerView.getPlayerUiController().showUi(true)
+            SharePreference.CHECK_PICTURE = false
+            youtubePlayerView.apply {
+                exitFullScreen()
+                getPlayerUiController().showUi(true)
+            }
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        Log.d("Hiennnn","EEEEEEE")
+    private fun setPlayNextVideo(youTubePlayer: YouTubePlayer) {
+        if (SharePreference.CHANGE == "NEXT") {
+            SharePreference.CHANGE = " "
+            if (checkVideo == listVideo.size - 1) {
+                checkVideo = 0
+            } else checkVideo++
+            listVideo[checkVideo].idVideo?.let { youTubePlayer.loadOrCueVideo(lifecycle, it, 0f) }
+        } else {
+            if (SharePreference.CHANGE == "PREVIOUS") {
+                SharePreference.CHANGE = " "
+                if (checkVideo == 0) {
+                    checkVideo = listVideo.size - 1
+                } else checkVideo--
+                listVideo[checkVideo].idVideo?.let {
+                    youTubePlayer.loadOrCueVideo(
+                        lifecycle,
+                        it,
+                        0f
+                    )
+                }
+            }
+        }
     }
 
     override fun eventBus(event: EventTest) {
         super.eventBus(event)
         finish()
-//        if( SharePreference.CHECK_PICTURE){
-//            youtubePlayerView.exitFullScreen()
-//            youtubePlayerView.getPlayerUiController().showUi(true)
-//        }
-    }
-
-    private fun setPlayNextVideo(youTubePlayer: YouTubePlayer){
-        if(SharePreference.CHANGE=="NEXT"){
-            youTubePlayer.loadOrCueVideo(lifecycle, "ZAzWT8mRoR0", 0f)
-        }
     }
 }

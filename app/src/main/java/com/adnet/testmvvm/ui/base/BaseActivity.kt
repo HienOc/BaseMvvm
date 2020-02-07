@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.adnet.testmvvm.BR
 import com.adnet.testmvvm.ui.listsvideo.EventTest
-import kotlinx.android.synthetic.main.activity_video.*
+import com.adnet.testmvvm.ui.listsvideo.VideoEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 

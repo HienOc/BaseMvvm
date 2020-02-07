@@ -1,7 +1,6 @@
 package com.adnet.testmvvm.ui.listsvideo
 
 import android.content.Intent
-import android.util.Log
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adnet.testmvvm.R
 import com.adnet.testmvvm.data.model.VideoYoutube
@@ -13,27 +12,29 @@ import kotlinx.android.synthetic.main.activity_lists_video.*
 import org.greenrobot.eventbus.EventBus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListsVideoActivity : BaseActivity<ActivityListsVideoBinding,ListsVideoViewModel>() {
+class ListsVideoActivity : BaseActivity<ActivityListsVideoBinding, ListsVideoViewModel>() {
 
     override val viewModel: ListsVideoViewModel by viewModel()
-
-    private var videoAdapter = VideoAdapter { video: VideoYoutube ->
-        SharePreference.MUSIC=video.idVideo
-        EventBus.getDefault().post(EventTest("ddd"))
-        startActivity(Intent(this,VideoActivity::class.java))
-    }
-
-    private var listVideo=mutableListOf<VideoYoutube>()
 
     override val layoutId: Int
         get() = R.layout.activity_lists_video
 
+    private var videoAdapter = VideoAdapter { video: VideoYoutube ->
+        SharePreference.MUSIC = video.idVideo.toString()
+        EventBus.getDefault().post(EventTest("ddd"))
+        val intent = Intent(this, VideoActivity::class.java)
+        intent.putParcelableArrayListExtra("video", listVideo)
+        startActivity(intent)
+    }
+
+    private val listVideo = arrayListOf<VideoYoutube>()
+
     override fun initView() {
         listVideo.apply {
-            add(VideoYoutube("ZAzWT8mRoR0","",""))
-            add(VideoYoutube("XyzaMpAVm3s","",""))
-            add(VideoYoutube("fTc5tuEn6_U","",""))
-            add(VideoYoutube("XyzaMpAVm3s","",""))
+            add(VideoYoutube("ZAzWT8mRoR0", "video 1", "33"))
+            add(VideoYoutube("XyzaMpAVm3s", "video 2", "33"))
+            add(VideoYoutube("fTc5tuEn6_U", "video 3", "33"))
+            add(VideoYoutube("XyzaMpAVm3s", "video 4", "33"))
         }
         recyclerViewMain.apply {
             layoutManager = StaggeredGridLayoutManager(
@@ -44,12 +45,10 @@ class ListsVideoActivity : BaseActivity<ActivityListsVideoBinding,ListsVideoView
             adapter = videoAdapter
         }
         videoAdapter.submitList(listVideo)
-        Log.d("Hiennnn","DDDDDD")
-        SharePreference.CHECK_PICTURE= false
+        SharePreference.CHECK_PICTURE = false
     }
 
     override fun initListener() {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
 }

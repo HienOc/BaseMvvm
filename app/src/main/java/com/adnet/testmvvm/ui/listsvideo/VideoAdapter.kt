@@ -47,13 +47,14 @@ class VideoAdapter(private val clickListener: (VideoYoutube) -> Unit) :
 
             var mLastClickTime: Long = 0
 
+            video.urlImage="https://img.youtube.com/vi/"+video.idVideo+"/default.jpg"
+
             binding.viewModel = video
 
             itemView.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(view: View) {
                     if (SystemClock.elapsedRealtime() - mLastClickTime < 1000)
                         return
-
                     clickListener(video)
                     mLastClickTime = SystemClock.elapsedRealtime()
 

@@ -25,6 +25,7 @@
                 android:layout_width="@dimen/dp_70"
                 android:layout_height="@dimen/dp_70"
                 android:layout_marginStart="@dimen/dp_16"
+                android:url="@{viewModel.urlImage}"
                 android:background="@color/colorPrimary" />
 
             <TextView
@@ -33,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp_16"
                 android:gravity="center|start"
-                android:text="BJBJBJJBJBKBKJBJBJ" />
+                android:text="@{viewModel.name}" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
