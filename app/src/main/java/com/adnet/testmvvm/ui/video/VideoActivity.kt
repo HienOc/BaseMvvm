@@ -3,6 +3,7 @@ package com.adnet.testmvvm.ui.video
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
+import android.os.Handler
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
@@ -77,6 +78,12 @@ class VideoActivity : BaseActivity<ActivityVideoBinding, VideoViewModel>() {
                 }
                 if (SharePreference.CHANGE != " ") {
                     setPlayNextVideo(youTube)
+                }
+                if (state == PlayerConstants.PlayerState.ENDED) {
+                    Handler().postDelayed({
+                        SharePreference.CHANGE = "NEXT"
+                        setPlayNextVideo(youTube)
+                    }, 3000)
                 }
             }
         })
