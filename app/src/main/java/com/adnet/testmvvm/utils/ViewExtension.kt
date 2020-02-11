@@ -1,5 +1,6 @@
 @file:Suppress("DEPRECATION")
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
@@ -7,7 +8,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.jakewharton.rxbinding2.view.RxView
 import java.text.DecimalFormat
+import java.util.concurrent.TimeUnit
 
 fun View?.gone() {
     this?.visibility = View.GONE
@@ -26,6 +29,14 @@ fun View.hideKeyboard() {
         context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputManager.hideSoftInputFromWindow(windowToken, 0)
 }
+
+@SuppressLint("CheckResult")
+fun View.setSafeOnClickListener(onClick: (View) -> Unit) {
+    RxView.clicks(this).throttleFirst(1000, TimeUnit.MILLISECONDS).subscribe {
+        onClick(this)
+    }
+}
+
 
 fun ImageView.setImageUrl(url: String) = Glide.with(context)
     .load(url)

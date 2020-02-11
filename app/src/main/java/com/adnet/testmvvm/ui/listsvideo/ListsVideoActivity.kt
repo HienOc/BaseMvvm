@@ -7,7 +7,7 @@ import com.adnet.testmvvm.data.model.VideoYoutube
 import com.adnet.testmvvm.databinding.ActivityListsVideoBinding
 import com.adnet.testmvvm.ui.base.BaseActivity
 import com.adnet.testmvvm.ui.video.VideoActivity
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.SharePreference
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.SharePreference
 import kotlinx.android.synthetic.main.activity_lists_video.*
 import org.greenrobot.eventbus.EventBus
 import org.koin.androidx.viewmodel.ext.android.viewModel

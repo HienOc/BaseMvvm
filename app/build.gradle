@@ -100,12 +100,17 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     kapt "com.github.bumptech.glide:compiler:4.11.0"
 
-   // implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
-   // implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.23'
+    // implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+    // implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.23'
 
     //SharedPreferences for Kotlin - https://github.com/chibatching/Kotpref
     implementation 'com.chibatching.kotpref:kotpref:2.8.0'
     implementation 'com.chibatching.kotpref:initializer:2.8.0'
 
     implementation 'org.greenrobot:eventbus:3.1.1'
+
+    //expansionpanel
+    implementation 'com.github.florent37:expansionpanel:1.2.2'
+
+    implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.2.0'
 }

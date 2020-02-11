@@ -18,7 +18,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.SharePreference
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.SharePreference
 import kotlinx.android.synthetic.main.activity_video.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

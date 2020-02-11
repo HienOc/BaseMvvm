@@ -1,9 +1,9 @@
 package com.adnet.testmvvm.ui.home
 
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.TranslateAnimation
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
@@ -13,6 +13,10 @@ import com.adnet.testmvvm.databinding.ItemNoteBinding
 import com.adnet.testmvvm.ui.adapter.VideoDiffUtilCallback
 import com.adnet.testmvvm.ui.base.BaseListViewHolder
 import com.adnet.testmvvm.ui.base.ListAdapterInterface
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.SharePreference
+import kotlinx.android.synthetic.main.item_note.view.*
+import org.greenrobot.eventbus.EventBus
+import setSafeOnClickListener
 
 class MainAdapter(private val clickListener: (Video) -> Unit) :
     ListAdapterInterface, ListAdapter<Video, MainAdapter.ListViewHolder>(VideoDiffUtilCallback()) {
@@ -43,20 +47,43 @@ class MainAdapter(private val clickListener: (Video) -> Unit) :
 
         fun bind(video: Video, clickListener: (Video) -> Unit) {
 
-            var mLastClickTime: Long = 0
-
             binding.viewModel = video
 
-            itemView.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(view: View) {
-                    if (SystemClock.elapsedRealtime() - mLastClickTime < 1000)
-                        return
+            if(SharePreference.CHECK_ITEM) {
+                itemView.checkbox.visibility=View.VISIBLE
+                itemView.checkbox.startAnimation(TranslateAnimation(
+                    -50f,
+                    0f,
+                    0f,
+                    0f
+                ).apply {
+                    duration = 400
+                })
+            }
+            else itemView.checkbox.visibility=View.GONE
 
-                    clickListener(video)
-                    mLastClickTime = SystemClock.elapsedRealtime()
+            itemView.checkbox.isChecked=false
 
+            itemView.setSafeOnClickListener {
+                if(SharePreference.CHECK_ITEM){
+                    itemView.checkbox.isChecked = !itemView.checkbox.isChecked
+                    if(itemView.checkbox.isChecked) {
+                        SharePreference.CHECK_STATUS=true
+                        EventBus.getDefault().post(video)
+                    }
+                    else{
+                        SharePreference.CHECK_STATUS=false
+                        EventBus.getDefault().post(video)
+                    }
                 }
-            })
+            }
+
+            itemView.setOnLongClickListener {
+                SharePreference.CHECK_ITEM=true
+                itemView.checkbox.isChecked=false
+                clickListener(video)
+                true
+            }
         }
     }
 }
