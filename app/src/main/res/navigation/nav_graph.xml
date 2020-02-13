@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_legislator.xml"
+    app:startDestination="@id/menuHome"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/menuHome"
+        android:name="com.adnet.testmvvm.ui.navigation.fragmentNavigation.HomeFragment"
+        android:label="Home Fragment"
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_menuHome_to_fragmentDetail"
+            app:destination="@id/fragmentDetail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/menuAdd"
+        android:name="com.adnet.testmvvm.ui.navigation.fragmentNavigation.AddFragment"
+        android:label="Add Fragment"
+        tools:layout="@layout/add_fragment" />
+
+    <fragment
+        android:id="@+id/menuImage"
+        android:name="com.adnet.testmvvm.ui.navigation.fragmentNavigation.PhotoFragment"
+        android:label="Photo Fragment"
+        tools:layout="@layout/photo_fragment" />
+
+    <fragment
+        android:id="@+id/menuMusic"
+        android:name="com.adnet.testmvvm.ui.navigation.fragmentNavigation.MusicFragment"
+        android:label="Music Fragment"
+        tools:layout="@layout/music_fragment" >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDetail"
+        android:name="com.adnet.testmvvm.ui.navigation.fragmentNavigation.DetailFragment"
+        android:label="Detail Fragment"
+        tools:layout="@layout/detail_fragment" />
+
+</navigation>

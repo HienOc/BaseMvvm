@@ -15,16 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.listsvideo.ListsVideoActivity"></activity>
+        <activity android:name=".ui.panel.PanelActivity"/>
+        <activity android:name=".ui.listsvideo.ListsVideoActivity" />
         <activity
             android:name=".ui.video.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
             android:hardwareAccelerated="true"
             android:resizeableActivity="true"
-            android:supportsPictureInPicture="true" />
+            android:supportsPictureInPicture="true"
+            tools:targetApi="n" />
         <activity android:name=".ui.home.MainActivity" />
         <activity
-            android:name=".ui.panel.PanelActivity"
+            android:name=".ui.navigation.NavigationActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
