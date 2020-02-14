@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
 import com.adnet.testmvvm.R
+import com.adnet.testmvvm.utils.rotate
 import kotlinx.android.synthetic.main.home_fragment.*
 import org.greenrobot.eventbus.EventBus
 
@@ -25,5 +26,6 @@ class HomeFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.fragmentDetail)
             EventBus.getDefault().post("Next")
         }
+        buttonNext.startAnimation(rotate)
     }
 }

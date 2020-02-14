@@ -57,5 +57,5 @@
     <dimen name="dp_310">310dp</dimen>
     <dimen name="dp_400">400dp</dimen>
 
-    <dimen name="design_fab_image_size" tools:override="false">135dp</dimen>
+<!--    <dimen name="design_fab_image_size" tools:override="false">56dp</dimen>-->
 </resources>

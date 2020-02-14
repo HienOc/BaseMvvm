@@ -5,5 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#4CAF50">
+    <ImageView
+        android:id="@+id/imageViewAdd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:background="#ffff"/>
 
 </LinearLayout>

@@ -6,6 +6,46 @@
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:background="#003029"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imageViewBack"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:padding="@dimen/dp_14"
+                android:src="@drawable/ic_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center_vertical"
+                android:text="@string/app_name"
+                android:textColor="#ffff"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintStart_toEndOf="@id/imageViewBack"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/imageViewDetail"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        android:layout_height="@dimen/dp_200"
+        android:layout_marginTop="@dimen/dp_200"
+        android:background="@color/colorPrimary"
+        />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
