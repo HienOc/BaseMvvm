@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list"
+    app:startDestination="@id/menuList"
+    tools:ignore="UnusedNavigation">
+    <fragment
+        android:id="@+id/menuList"
+        android:name="com.adnet.testmvvm.ui.navigation.fragmentNavigation.PhotoFragment"
+        android:label="ListFragment"
+        tools:layout="@layout/photo_fragment" >
+<!--        <action-->
+<!--            android:id="@+id/actionNextPlayList"-->
+<!--            app:destination="@id/playListList"-->
+<!--            app:enterAnim="@anim/slide_in_left_play"-->
+<!--            app:exitAnim="@anim/slide_out_right_play"-->
+<!--            app:popEnterAnim="@anim/slide_in_right_play"-->
+<!--            app:popExitAnim="@anim/slide_out_left_play"/>-->
+    </fragment>
+
+</navigation>

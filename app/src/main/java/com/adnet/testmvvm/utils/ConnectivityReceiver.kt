@@ -1,0 +1,29 @@
+package com.adnet.testmvvm.utils
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.net.ConnectivityManager
+import android.util.Log
+
+class ConnectivityReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, arg1: Intent) {
+        Log.d("HienOCccc","MMMMMM")
+        connectivityReceiverListener?.onNetworkConnectionChanged(isConnectedOrConnecting(context))
+    }
+
+    private fun isConnectedOrConnecting(context: Context): Boolean {
+        val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connMgr.activeNetworkInfo
+       // SharePreference.TYPE_WIFI = networkInfo.type == ConnectivityManager.TYPE_WIFI
+        return networkInfo != null && networkInfo.isConnectedOrConnecting
+    }
+
+    interface ConnectivityReceiverListener {
+        fun onNetworkConnectionChanged(isConnected: Boolean)
+    }
+
+    companion object {
+        var connectivityReceiverListener: ConnectivityReceiverListener? = null
+    }
+}

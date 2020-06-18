@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setting"
+    app:startDestination="@id/menuSetting"
+    tools:ignore="UnusedNavigation">
+    <fragment
+        android:id="@+id/menuSetting"
+        android:name="com.adnet.testmvvm.ui.navigation.fragmentNavigation.MusicFragment"
+        android:label="SettingFragment"
+        tools:layout="@layout/music_fragment" >
+    </fragment>
+
+</navigation>
